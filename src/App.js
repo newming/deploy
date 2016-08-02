@@ -11,24 +11,31 @@ class App extends React.Component {
   constructor(){
     super();
     this.state={
-      info:{}
+      info:{},
+      wait:true
     }
   }
   componentDidMount(){
     this.getUserInfo().then((data) => {
       console.log(data.gitInfo);
       this.setState({
-        info:data.gitInfo
+        info:data.gitInfo,
+        wait:false
       })
     });
   }
   render () {
     return(
       <div>
-        {this.state.info.blog},
-        {this.state.info.following},
-        {this.state.info.location},
-        <img src={this.state.info.avatar_url} />
+        {
+          this.state.wait ? <h1>loading....</h1> :
+            <div>
+              {this.state.info.blog},
+              {this.state.info.following},
+              {this.state.info.location},
+              <img src={this.state.info.avatar_url} />
+            </div>
+        }
       </div>
     )
   }
