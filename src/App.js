@@ -1,7 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class App extends React.Component {
+  getChildContext() {
+    return {muiTheme: getMuiTheme()};
+  }
   getUserInfo(){
     return axios.get(`https://api.github.com/users/newming`)
       .then((xx) => (
@@ -28,7 +33,7 @@ class App extends React.Component {
     return(
       <div>
         {
-          this.state.wait ? <h1>loading....</h1> :
+          this.state.wait ? <CircularProgress /> :
             <div>
               {this.state.info.blog},
               {this.state.info.following},
@@ -40,5 +45,9 @@ class App extends React.Component {
     )
   }
 }
+
+App.childContextTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
+};
 
 export default App;
